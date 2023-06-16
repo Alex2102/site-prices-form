@@ -13,6 +13,7 @@
       </v-btn>
 
       <v-btn
+          v-if="showApply"
           class="ml-5 btn"
           height="50"
           @click="$emit('apply')"
@@ -39,7 +40,11 @@ export default {
     isDivider: {
       type: Boolean,
       default: true
-    }
+    },
+    showApply: {
+      type: Boolean,
+      default: true
+    },
   },
   emits: ['save', 'apply', 'cancel']
 }

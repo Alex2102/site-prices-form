@@ -20,11 +20,17 @@
           <v-col cols="12">
             <div class="date__field-wrap">
               <div class="left-block">
-                <s-date-picker v-model="startDate" label="Дата начала действия прайса"/>
+                <s-date-picker
+                    v-model="startDate"
+                    :max-date="endDate"
+                    label="Дата начала действия прайса"/>
               </div>
               <hr>
               <div class="right-block">
-                <s-date-picker v-model="endDate" label="Дата окончания действия прайса"/>
+                <s-date-picker
+                    v-model="endDate"
+                    :min-date="startDate"
+                    label="Дата окончания действия прайса"/>
               </div>
             </div>
           </v-col>
@@ -49,7 +55,7 @@ export default {
   components: {SliderFooterBtns, SDatePicker},
   data:() =>({
     title: '',
-    startDate: null,
+    startDate: new Date(),
     endDate: null,
 
     requiredValidation: [v=>!!v || 'Поле обязательно для заполнения']

@@ -8,6 +8,8 @@
         locale="ru"
         :placeholder="label"
         :required="isRequired"
+        :min-date="minDate"
+        :max-date="maxDate"
         @closed="pickerClose"
         :class="{'error': isError}"
     />
@@ -25,6 +27,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 export default {
   name: 's-date-picker',
   components: {VueDatePicker},
+  emits: ['update:modelValue'],
   props: {
     modelValue: {
       type: Date,
@@ -45,6 +48,14 @@ export default {
     isRequired: {
       type: Boolean,
       default: true
+    },
+    minDate: {
+      type: Date,
+      default: null
+    },
+    maxDate: {
+      type: Date,
+      default: null
     }
   },
 
