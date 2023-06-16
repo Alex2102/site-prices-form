@@ -23,6 +23,7 @@
                 <s-date-picker
                     v-model="startDate"
                     :max-date="endDate"
+                    :in-valid="!startDateValid"
                     label="Дата начала действия прайса"/>
               </div>
               <hr>
@@ -30,6 +31,7 @@
                 <s-date-picker
                     v-model="endDate"
                     :min-date="startDate"
+                    :in-valid="!endDateValid"
                     label="Дата окончания действия прайса"/>
               </div>
             </div>
@@ -55,17 +57,22 @@ export default {
   components: {SliderFooterBtns, SDatePicker},
   data:() =>({
     title: '',
-    startDate: new Date(),
+    startDate: null,
     endDate: null,
 
-    requiredValidation: [v=>!!v || 'Поле обязательно для заполнения']
+    requiredValidation: [v=>!!v || 'Поле обязательно для заполнения'],
+    startDateValid: true,
+    endDateValid: true
   }),
 
   methods: {
     async save(closeSlider = 'Y') {
       const {valid} = await this.$refs.form.validate()
 
-      if(!valid) return
+      if(this.startDate === null) this.startDateValid = false
+      if(this.endDate === null) this.endDateValid = false
+
+      if(!valid || this.startDateValid !== true || this.endDateValid !== true) return
 
 
     },

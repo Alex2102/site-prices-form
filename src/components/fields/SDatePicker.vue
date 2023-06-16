@@ -56,6 +56,10 @@ export default {
     maxDate: {
       type: Date,
       default: null
+    },
+    inValid: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -66,6 +70,9 @@ export default {
   watch: {
     date(val) {
       this.error = val === null
+    },
+    inValid(val) {
+      this.error = val === true
     }
   },
 
