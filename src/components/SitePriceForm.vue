@@ -1,5 +1,5 @@
 <template>
-  <v-card max-width="800" class="ml-auto mr-auto mt-10" color="background" variant="flat">
+  <v-card max-width="800" class="ml-auto mr-auto mt-10 price__edit-card" color="background" variant="flat">
     <v-card-title>Редактирование прайса</v-card-title>
 
     <v-card-item>
@@ -20,25 +20,11 @@
           <v-col cols="12">
             <div class="date__field-wrap">
               <div class="left-block">
-<!--                <v-text-field-->
-<!--                    v-model="startDate"-->
-<!--                    variant="outlined"-->
-<!--                    label="Дата начала действия прайса"-->
-<!--                    clearable-->
-<!--                />-->
-<!--                <v-date-picker-->
-<!--                    color="primary"-->
-<!--                ></v-date-picker>-->
-                <VueDatePicker v-model="year" year-picker />
+                <s-date-picker v-model="startDate" label="Дата начала действия прайса"/>
               </div>
               <hr>
               <div class="right-block">
-                <v-text-field
-                    v-model="endDate"
-                    variant="outlined"
-                    label="Дата окончания действия прайса"
-                    clearable
-                />
+                <s-date-picker v-model="endDate" label="Дата окончания действия прайса"/>
               </div>
             </div>
           </v-col>
@@ -56,18 +42,15 @@
 
 <script>
 import SliderFooterBtns from "@/components/controls/SliderFooterBtns.vue"
-import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css'
+import SDatePicker from "@/components/fields/SDatePicker.vue"
 
 export default {
   name: 'site-price-form',
-  components: {SliderFooterBtns, VueDatePicker},
+  components: {SliderFooterBtns, SDatePicker},
   data:() =>({
     title: '',
     startDate: null,
     endDate: null,
-
-    year: null,
 
     requiredValidation: [v=>!!v || 'Поле обязательно для заполнения']
   }),
@@ -87,7 +70,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+.price__edit-card,
+.price__edit-card .v-card-item__content {
+  overflow: inherit !important;
+}
 .date__field-wrap {
   display: flex;
   justify-content: space-between;
