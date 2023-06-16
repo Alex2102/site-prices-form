@@ -56,7 +56,7 @@ export default {
     siteId: null,
 
     title: '',
-    startDate: new Date(),
+    startDate: null,
     endDate: null,
 
     requiredValidation: [v=>!!v || 'Поле обязательно для заполнения']
@@ -75,6 +75,8 @@ export default {
 
       this.entityId = result?.data?.entityData?.id ?? null
       this.title = result?.data?.entityData?.title ?? ''
+      this.startDate = result?.data?.entityData?.startDate ? new Date(result?.data?.entityData?.startDate) : null
+      this.endDate = result?.data?.entityData?.endDate ? new Date(result?.data?.entityData?.endDate) : null
     },
     async save(closeSlider = 'Y') {
       const {valid} = await this.$refs.form.validate()
