@@ -1,7 +1,5 @@
 <template>
-  <v-card max-width="800" class="ml-auto mr-auto mt-10 price__edit-card" color="background" variant="flat">
-    <v-card-title>Редактирование прайса</v-card-title>
-
+  <v-card max-width="800" class=price__edit-card" color="background" variant="flat">
     <v-card-item>
       <v-form ref="form">
         <v-row class=mt-0>
@@ -47,13 +45,16 @@
 </template>
 
 <script>
-import SliderFooterBtns from "@/components/controls/SliderFooterBtns.vue"
-import SDatePicker from "@/components/fields/SDatePicker.vue"
+import SliderFooterBtns from "@/../../../../../../../modules/solar.booking/lib/ui/controls/SliderFooterBtns.vue"
+import SDatePicker from "@/../../../../../../../modules/solar.booking/lib/ui/fields/SDatePicker.vue"
 
 export default {
   name: 'site-price-form',
   components: {SliderFooterBtns, SDatePicker},
   data:() =>({
+    entityId: null,
+    siteId: null,
+
     title: '',
     startDate: new Date(),
     endDate: null,
@@ -61,7 +62,20 @@ export default {
     requiredValidation: [v=>!!v || 'Поле обязательно для заполнения']
   }),
 
+  async mounted() {
+    await this.init()
+  },
+
   methods: {
+    async init() {
+      this.siteId = window?.appConfig?.siteId
+      const data = {entityId: window?.appConfig?.entityId}
+
+      const result = await runComponentAction('solar:booking.sites.price.edit', 'init', data)
+
+      this.entityId = result?.data?.entityData?.id ?? null
+      this.title = result?.data?.entityData?.title ?? ''
+    },
     async save(closeSlider = 'Y') {
       const {valid} = await this.$refs.form.validate()
 
